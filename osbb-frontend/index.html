@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OSBB Requests</title>
+</head>
+<body>
+<h1>OSBB Звернення</h1>
+
+<div id="auth-section">
+  <input type="text" id="phone" placeholder="Введіть номер телефону" />
+  <button id="login-btn">Увійти</button>
+</div>
+
+<div id="message-section" style="display: none;">
+  <textarea id="message" placeholder="Ваше звернення..."></textarea><br/>
+  <button id="beautify-btn">Beautify</button>
+  <button id="send-btn">Надіслати супер адміну</button>
+</div>
+
+<div id="admin-section" style="display: none;">
+  <h2>Запити користувачів</h2>
+  <ul id="requests-list"></ul>
+</div>
+
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>
