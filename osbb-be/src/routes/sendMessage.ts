@@ -4,27 +4,25 @@ import { messages } from '../data/messages';
 
 const router = express.Router();
 
-
 router.post('/', authMiddleware, async (req: any, res: any) => {
-    const { message } = req.body;
-    const { user } = req;
+  const { message } = req.body;
+  const { user } = req;
 
-    if (!message) {
-        return res.status(400).json({ error: 'Message text is required' });
-    }
+  if (!message) {
+    return res.status(400).json({ error: 'Message text is required' });
+  }
 
+  const newMessage = {
+    id: messages.length + 1,
+    user: user.phoneNumber,
+    text: message,
+    section: 'general', // Можна розширити пізніше
+    timestamp: new Date(),
+  };
 
-    const newMessage = {
-        id: messages.length + 1,
-        user: user.phoneNumber,
-        text: message,
-        section: 'general', // Можна розширити пізніше
-        timestamp: new Date()
-    };
+  messages.push(newMessage);
 
-    messages.push(newMessage);
-
-    res.json({ success: true });
+  res.json({ success: true });
 });
 
 export default router;

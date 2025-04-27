@@ -5,34 +5,32 @@ import { beautifyText } from '../services/openaiService';
 
 const router = express.Router();
 
-
 router.post('/', authMiddleware, async (req: any, res: any) => {
-    const { message } = req.body;
-    const { user } = req;
+  const { message } = req.body;
+  const { user } = req;
 
-    if (!message) {
-        return res.status(400).json({ error: 'Message text is required' });
-    }
+  if (!message) {
+    return res.status(400).json({ error: 'Message text is required' });
+  }
+  let finalText = message;
 
-    let finalText = message;
+  if (message) {
+    finalText = await beautifyText(message);
+  }
 
-    if (message) {
-        finalText = await beautifyText(message);
-    }
+  const newMessage = {
+    id: messages.length + 1,
+    user: user.phoneNumber,
+    text: finalText,
+    section: 'general',
+    timestamp: new Date(),
+  };
 
-    const newMessage = {
-        id: messages.length + 1,
-        user: user.phoneNumber,
-        text: finalText,
-        section: 'general',
-        timestamp: new Date()
-    };
-
-    res.json({ success: true, message: newMessage });
+  res.json({ success: true, message: newMessage });
 });
 
 router.get('/', authMiddleware, (req, res) => {
-    res.json(messages);
+  res.json(messages);
 });
 
 export default router;
