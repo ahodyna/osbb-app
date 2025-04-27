@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OSBB Requests</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+<div id="loader" style="display: none;">Завантаження...</div>
+
 <h1>OSBB Звернення</h1>
 
 <div id="auth-section">
@@ -23,6 +26,13 @@
   <h2>Запити користувачів</h2>
   <ul id="requests-list"></ul>
 </div>
+
+<div id="overlay" style="display: none;"></div>
+<div id="modal" class="modal" style="display: none;">
+  <p id="modal-message"></p>
+  <button id="modal-btn">ОК</button>
+</div>
+
 
 <script type="module" src="/src/main.ts"></script>
 </body>
