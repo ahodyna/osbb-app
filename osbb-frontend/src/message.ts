@@ -2,9 +2,9 @@ import { getCurrentUser } from './auth';
 import { Request } from './types';
 
 export async function beautifyMessage(message: string): Promise<string> {
-    const res = await fetch('http://localhost:3000/api/openai/beautify', {
+    const res = await fetch('http://localhost:3000/api/messages', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'authorization': `Bearer ${localStorage.getItem('token') || ''}` },
         body: JSON.stringify({ message }),
     });
     const data = await res.json();
