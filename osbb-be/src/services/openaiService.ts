@@ -7,7 +7,7 @@ const openai = new OpenAI({
 
 export async function beautifyText(text: string): Promise<string> {
     const response = await openai.chat.completions.create({
-        messages: [{ role: 'user', content: `Переформулюй офіційніше це звернення: "${text}". Має бути заголовок та тип звернення та сам текст, але не більше 5 речень` }],
+        messages: [{ role: 'user', content: `Переформулюй наведене звернення, зробивши його офіційнішим і більш зрозумілим, але обмежся 2–3 реченнями:: "${text}"` }],
         model: 'gpt-3.5-turbo',
     });
 
