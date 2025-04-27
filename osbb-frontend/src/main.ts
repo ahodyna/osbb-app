@@ -77,7 +77,6 @@ sendBtn.addEventListener('click', async () => {
     showModal('Звернення успішно надіслано!');
 });
 
-// Завантаження запитів
 async function loadRequests() {
     const list = document.getElementById('requests-list')!;
     showLoader();
