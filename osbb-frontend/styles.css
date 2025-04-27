@@ -146,3 +146,41 @@ textarea {
     max-height: 200px;
 }
 
+/* Стилі для селектів */
+select {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+/* Коли селект у фокусі */
+select:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* Стилі для випадаючих списків в адмін-секції */
+#section-select-admin {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+/* Стилі для селектів на мобільних пристроях (якщо потрібні додаткові стилі) */
+@media (max-width: 600px) {
+    select {
+        width: 100%;
+        padding: 10px 12px;
+    }
+}

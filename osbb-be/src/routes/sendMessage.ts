@@ -5,18 +5,22 @@ import { messages } from '../data/messages';
 const router = express.Router();
 
 router.post('/', authMiddleware, async (req: any, res: any) => {
-  const { message } = req.body;
+  const { message, section } = req.body;
   const { user } = req;
 
   if (!message) {
     return res.status(400).json({ error: 'Message text is required' });
   }
 
+  if (!section) {
+    return res.status(400).json({ error: 'Section is required' });
+  }
+
   const newMessage = {
     id: messages.length + 1,
     user: user.phoneNumber,
     text: message,
-    section: 'general', // Можна розширити пізніше
+    section: section, // Зберігаємо секцію
     timestamp: new Date(),
   };
 

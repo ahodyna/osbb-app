@@ -29,7 +29,14 @@ router.post('/', authMiddleware, async (req: any, res: any) => {
   res.json({ success: true, message: newMessage });
 });
 
-router.get('/', authMiddleware, (req, res) => {
+router.get('/', authMiddleware, (req: any, res: any) => {
+  const { section } = req.query;
+
+  if (section) {
+    const filteredMessages = messages.filter((message) => message.section === section);
+    return res.json(filteredMessages);
+  }
+
   res.json(messages);
 });
 

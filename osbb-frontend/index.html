@@ -18,12 +18,35 @@
 
 <div id="message-section" style="display: none;">
   <textarea id="message" placeholder="Ваше звернення..."></textarea><br/>
+
+  <select id="section">
+    <option value="technical">Технічні запити</option>
+    <option value="administrative">Адміністративні питання</option>
+    <option value="complaints">Скарги</option>
+    <option value="service-request">Запит на послугу</option>
+    <option value="general">Загальні питання</option>
+    <option value="urgent">Екстрені запити</option>
+    <option value="meeting">Запити на засідання ОСББ</option>
+  </select><br/>
+
   <button id="beautify-btn">Beautify</button>
   <button id="send-btn">Надіслати супер адміну</button>
 </div>
 
 <div id="admin-section" style="display: none;">
   <h2>Запити користувачів</h2>
+
+  <select id="section-select-admin">
+    <option value="">Всі секції</option>
+    <option value="technical">Технічні запити</option>
+    <option value="administrative">Адміністративні питання</option>
+    <option value="complaints">Скарги</option>
+    <option value="service-request">Запит на послугу</option>
+    <option value="general">Загальні питання</option>
+    <option value="urgent">Екстрені запити</option>
+    <option value="meeting">Запити на засідання ОСББ</option>
+  </select>
+
   <ul id="requests-list"></ul>
 </div>
 
@@ -32,7 +55,6 @@
   <p id="modal-message"></p>
   <button id="modal-btn">ОК</button>
 </div>
-
 
 <script type="module" src="/src/main.ts"></script>
 </body>
