@@ -3,6 +3,7 @@ export interface User {
   phone: string;
   token: string;
   isSuperAdmin: boolean;
+  error?: string;
 }
 
 export interface Request {

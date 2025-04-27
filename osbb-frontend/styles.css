@@ -34,7 +34,7 @@ h1 {
 }
 
 /* Інпути та textarea */
-input[type="text"], textarea {
+input[type="text"], input[type="password"], textarea {
     width: 100%;
     padding: 12px 15px;
     margin-bottom: 15px;
@@ -44,9 +44,10 @@ input[type="text"], textarea {
     box-sizing: border-box;
 }
 
-textarea {
-    resize: vertical;
-    min-height: 120px;
+/* Спеціальні стилі для пароля */
+input[type="password"] {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 0.05em;
 }
 
 /* Кнопки */
@@ -146,7 +147,6 @@ textarea {
     max-height: 200px;
 }
 
-/* Стилі для селектів */
 select {
     width: 100%;
     padding: 12px 15px;
@@ -159,13 +159,11 @@ select {
     transition: border-color 0.3s ease;
 }
 
-/* Коли селект у фокусі */
 select:focus {
     border-color: #3498db;
     outline: none;
 }
 
-/* Стилі для випадаючих списків в адмін-секції */
 #section-select-admin {
     width: 100%;
     padding: 12px 15px;
@@ -177,10 +175,42 @@ select:focus {
     background-color: #fff;
 }
 
-/* Стилі для селектів на мобільних пристроях (якщо потрібні додаткові стилі) */
 @media (max-width: 600px) {
     select {
         width: 100%;
         padding: 10px 12px;
     }
+}
+
+input[type="password"] {
+    position: relative;
+}
+
+input[type="password"]::placeholder {
+    color: #bbb;
+    font-style: italic;
+}
+
+
+#logout-user-admin,
+#logout-user {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#logout-user-admin,
+#logout-user:hover {
+    background-color: #d32f2f;
+}
+
+#logout-user-admin,
+#logout-user:active {
+    background-color: #b71c1c;
 }

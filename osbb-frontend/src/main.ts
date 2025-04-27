@@ -1,15 +1,13 @@
-import { login, getCurrentUser } from './auth';
-import { beautifyMessage, sendMessage, getAllRequests } from './message';
+import { login, logout, register } from './auth';
+import { beautifyMessage, sendMessage } from './message';
 
 const authSection = document.getElementById('auth-section')!;
 const messageSection = document.getElementById('message-section')!;
 const adminSection = document.getElementById('admin-section')!;
-const loginBtn = document.getElementById('login-btn')!;
 const sendBtn = document.getElementById('send-btn')!;
 const beautifyBtn = document.getElementById('beautify-btn')!;
 const loader = document.getElementById('loader')!;
 
-// Показати/сховати лоадер
 function showLoader() {
   loader.style.display = 'block';
 }
@@ -17,7 +15,6 @@ function hideLoader() {
   loader.style.display = 'none';
 }
 
-// Отримуємо посилання на модалку
 const modal = document.getElementById('modal')!;
 const overlay = document.getElementById('overlay')!;
 const modalMessage = document.getElementById('modal-message')!;
@@ -36,17 +33,79 @@ function hideModal() {
 
 modalBtn.addEventListener('click', hideModal);
 
-// Логіка кнопок
+const loginBtn = document.getElementById('login-btn')!;
+const registerBtn = document.getElementById('register-btn')!;
+const goToRegisterLink = document.getElementById('go-to-register')!;
+const goToLoginLink = document.getElementById('go-to-login')!;
+
+const loginForm = document.getElementById('login-form')!;
+const registerForm = document.getElementById('register-form')!;
+const adminLogoutBtn = document.getElementById('logout-user-admin')!;
+const userLogoutBtn = document.getElementById('logout-user')!;
+
+goToRegisterLink.addEventListener('click', () => {
+  loginForm.style.display = 'none';
+  registerForm.style.display = 'block';
+});
+
+goToLoginLink.addEventListener('click', () => {
+  registerForm.style.display = 'none';
+  loginForm.style.display = 'block';
+});
+
+userLogoutBtn.addEventListener('click', () => {
+  logout();
+});
+
+adminLogoutBtn.addEventListener('click', () => {
+  logout();
+});
+
 loginBtn.addEventListener('click', async () => {
-  const phoneInput = (document.getElementById('phone') as HTMLInputElement).value;
-  if (!phoneInput) return alert('Введіть номер телефону');
+  const phoneInput = (document.getElementById('phone-login') as HTMLInputElement).value;
+  const passwordInput = (document.getElementById('password-login') as HTMLInputElement).value;
+
+  if (!phoneInput || !passwordInput)
+    return showModal('Будь ласка, введіть номер телефону та пароль');
 
   try {
     showLoader();
-    const user = await login(phoneInput);
+    const user = await login(phoneInput, passwordInput);
+
+    if (!user || user?.error) {
+      showModal(user?.error || 'Error');
+      return;
+    }
 
     authSection.style.display = 'none';
+    if (user.isSuperAdmin) {
+      adminSection.style.display = 'block';
+      await loadRequests();
+    } else {
+      messageSection.style.display = 'block';
+    }
+  } finally {
+    hideLoader();
+  }
+});
 
+registerBtn.addEventListener('click', async () => {
+  const phoneInput = (document.getElementById('phone-register') as HTMLInputElement).value;
+  const passwordInput = (document.getElementById('password-register') as HTMLInputElement).value;
+
+  if (!phoneInput || !passwordInput)
+    return showModal('Будь ласка, введіть номер телефону та пароль');
+
+  try {
+    showLoader();
+    const user = await register(phoneInput, passwordInput);
+
+    if (!user || user?.error) {
+      showModal(user?.error || 'Error');
+      return;
+    }
+
+    authSection.style.display = 'none';
     if (user.isSuperAdmin) {
       adminSection.style.display = 'block';
       await loadRequests();
@@ -64,7 +123,12 @@ beautifyBtn.addEventListener('click', async () => {
   try {
     showLoader();
     const beautified = await beautifyMessage(textarea.value);
-    textarea.value = beautified;
+    if (!beautified || beautified.error) {
+      showModal(beautified.error || 'Error');
+      return;
+    }
+
+    textarea.value = beautified?.message || textarea.value;
   } finally {
     hideLoader();
   }
@@ -78,7 +142,7 @@ sendBtn.addEventListener('click', async () => {
 
   const section = sectionSelect.value;
 
-  await sendMessage(textarea.value, textarea.value, section);
+  await sendMessage(textarea.value, section);
   textarea.value = '';
   showModal('Звернення успішно надіслано!');
 });

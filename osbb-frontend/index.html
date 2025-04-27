@@ -9,12 +9,26 @@
 <body>
 <div id="loader" style="display: none;">Завантаження...</div>
 
-<h1>OSBB Звернення</h1>
+<h1>ОСББ звернення</h1>
 
 <div id="auth-section">
-  <input type="text" id="phone" placeholder="Введіть номер телефону" />
-  <button id="login-btn">Увійти</button>
+  <div id="login-form">
+    <h2>Увійти</h2>
+    <input type="text" id="phone-login" placeholder="Введіть номер телефону" />
+    <input type="password" id="password-login" placeholder="Введіть пароль" />
+    <button id="login-btn">Увійти</button>
+    <p>Ще не маєте акаунту? <a href="#" id="go-to-register">Зареєструватися</a></p>
+  </div>
+
+  <div id="register-form" style="display: none;">
+    <h2>Зареєструватися</h2>
+    <input type="text" id="phone-register" placeholder="Введіть номер телефону" />
+    <input type="password" id="password-register" placeholder="Введіть пароль" />
+    <button id="register-btn">Зареєструватися</button>
+    <p>Вже є акаунт? <a href="#" id="go-to-login">Увійти</a></p>
+  </div>
 </div>
+
 
 <div id="message-section" style="display: none;">
   <textarea id="message" placeholder="Ваше звернення..."></textarea><br/>
@@ -29,8 +43,9 @@
     <option value="meeting">Запити на засідання ОСББ</option>
   </select><br/>
 
-  <button id="beautify-btn">Beautify</button>
-  <button id="send-btn">Надіслати супер адміну</button>
+  <button id="beautify-btn">✨ Beautify AI ✨</button>
+  <button id="send-btn">Надіслати</button>
+  <div>  <button id="logout-user" >Вийти</button></div>
 </div>
 
 <div id="admin-section" style="display: none;">
@@ -48,6 +63,7 @@
   </select>
 
   <ul id="requests-list"></ul>
+  <div><button id="logout-user-admin">Вийти</button></div>
 </div>
 
 <div id="overlay" style="display: none;"></div>

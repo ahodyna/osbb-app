@@ -1,6 +1,6 @@
 import express from 'express';
 import { authMiddleware } from '../middlewares/authMiddleware';
-import { messages } from '../data/messages';
+import { messages } from '../data/db';
 
 const router = express.Router();
 
@@ -20,7 +20,7 @@ router.post('/', authMiddleware, async (req: any, res: any) => {
     id: messages.length + 1,
     user: user.phoneNumber,
     text: message,
-    section: section, // Зберігаємо секцію
+    section: section,
     timestamp: new Date(),
   };
 

@@ -1,4 +1,4 @@
-import { users } from '../data/users';
+import { users } from '../data/db';
 
 export const authMiddleware = (req: any, res: any, next: any) => {
   const token = req.headers.authorization?.split(' ')[1];

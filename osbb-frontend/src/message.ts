@@ -1,7 +1,9 @@
 import { getCurrentUser } from './auth';
 import { Request } from './types';
 
-export async function beautifyMessage(message: string): Promise<string> {
+export async function beautifyMessage(
+  message: string
+): Promise<{ error?: string; message?: string }> {
   const res = await fetch('http://localhost:3000/api/messages', {
     method: 'POST',
     headers: {
@@ -11,14 +13,11 @@ export async function beautifyMessage(message: string): Promise<string> {
     body: JSON.stringify({ message }),
   });
   const data = await res.json();
-  return data.message.text;
+
+  return data;
 }
 
-export async function sendMessage(
-  message: string,
-  beautifiedMessage: string,
-  section: string
-): Promise<void> {
+export async function sendMessage(message: string, section: string): Promise<void> {
   const user = getCurrentUser();
   if (!user) throw new Error('Користувач не авторизований');
 
@@ -28,17 +27,6 @@ export async function sendMessage(
       'Content-Type': 'application/json',
       authorization: `Bearer ${localStorage.getItem('token') || ''}`,
     },
-    body: JSON.stringify({ userId: user.id, message, beautifiedMessage, section }),
+    body: JSON.stringify({ userId: user.id, message, section }),
   });
-}
-
-export async function getAllRequests(): Promise<Request[]> {
-  const res = await fetch('http://localhost:3000/api/messages', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      authorization: `Bearer ${localStorage.getItem('token') || ''}`,
-    },
-  });
-  return await res.json();
 }
