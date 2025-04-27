@@ -1,7 +1,6 @@
 import express from 'express';
 import { authMiddleware } from '../middlewares/authMiddleware';
 import { messages } from '../data/messages';
-import { beautifyText } from '../services/openaiService';
 
 const router = express.Router();
 
@@ -14,25 +13,18 @@ router.post('/', authMiddleware, async (req: any, res: any) => {
         return res.status(400).json({ error: 'Message text is required' });
     }
 
-    let finalText = message;
-
-    if (message) {
-        finalText = await beautifyText(message);
-    }
 
     const newMessage = {
         id: messages.length + 1,
         user: user.phoneNumber,
-        text: finalText,
-        section: 'general',
+        text: message,
+        section: 'general', // Можна розширити пізніше
         timestamp: new Date()
     };
 
-    res.json({ success: true, message: newMessage });
-});
+    messages.push(newMessage);
 
-router.get('/', authMiddleware, (req, res) => {
-    res.json(messages);
+    res.json({ success: true });
 });
 
 export default router;

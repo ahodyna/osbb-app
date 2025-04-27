@@ -12,19 +12,21 @@ loginBtn.addEventListener('click', async () => {
     const phoneInput = (document.getElementById('phone') as HTMLInputElement).value;
     if (!phoneInput) return alert('Введіть номер телефону');
     const user = await login(phoneInput);
+
     authSection.style.display = 'none';
     messageSection.style.display = 'block';
 
     if (user.isSuperAdmin) {
+        messageSection.style.display = 'none';
         adminSection.style.display = 'block';
         loadRequests();
     }
-});
+})
 
 beautifyBtn.addEventListener('click', async () => {
     const textarea = document.getElementById('message') as HTMLTextAreaElement;
     const beautified = await beautifyMessage(textarea.value);
-    textarea.value = beautified;
+    textarea.value = beautified ;
 });
 
 sendBtn.addEventListener('click', async () => {
@@ -38,9 +40,9 @@ async function loadRequests() {
     const list = document.getElementById('requests-list')!;
     const requests = await getAllRequests();
     list.innerHTML = '';
-    requests.forEach(r => {
+    requests.forEach((r: any) => {
         const li = document.createElement('li');
-        li.textContent = r.beautifiedMessage;
+        li.textContent = r.text;
         list.appendChild(li);
     });
 }
