@@ -13,6 +13,7 @@ export async function login(phone: string, password: string): Promise<User> {
   currentUser = user;
 
   localStorage.setItem('token', user.token);
+
   return user;
 }
 
@@ -35,6 +36,11 @@ export function getCurrentUser(): User | null {
 }
 
 export function logout(): void {
+  const message = document.getElementById('message') as HTMLTextAreaElement | null;
+  if (message) {
+    message.value = '';
+  }
+
   localStorage.removeItem('token');
 
   currentUser = null;
