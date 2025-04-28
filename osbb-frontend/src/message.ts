@@ -1,5 +1,4 @@
 import { getCurrentUser } from './auth';
-import { Request } from './types';
 
 export async function beautifyMessage(
   message: string
@@ -12,9 +11,7 @@ export async function beautifyMessage(
     },
     body: JSON.stringify({ message }),
   });
-  const data = await res.json();
-
-  return data;
+  return res.json();
 }
 
 export async function sendMessage(message: string, section: string): Promise<void> {

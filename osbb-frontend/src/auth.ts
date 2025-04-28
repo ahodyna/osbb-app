@@ -8,13 +8,12 @@ export async function login(phone: string, password: string): Promise<User> {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ phoneNumber: phone, password }),
   });
-
-  const user = await res.json();
-  currentUser = user;
-
-  localStorage.setItem('token', user.token);
-
-  return user;
+  const data = await res.json();
+  if (data.token) {
+    localStorage.setItem('token', data.token);
+    currentUser = data;
+  }
+  return data;
 }
 
 export async function register(phone: string, password: string): Promise<User> {
@@ -23,26 +22,19 @@ export async function register(phone: string, password: string): Promise<User> {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ phoneNumber: phone, password }),
   });
+  const data = await res.json();
+  if (data.token) {
+    localStorage.setItem('token', data.token);
+    currentUser = data;
+  }
+  return data;
+}
 
-  const user = await res.json();
-  currentUser = user;
-
-  localStorage.setItem('token', user.token);
-  return user;
+export function logout() {
+  localStorage.removeItem('token');
+  window.location.reload();
 }
 
 export function getCurrentUser(): User | null {
   return currentUser;
-}
-
-export function logout(): void {
-  const message = document.getElementById('message') as HTMLTextAreaElement | null;
-  if (message) {
-    message.value = '';
-  }
-
-  localStorage.removeItem('token');
-
-  currentUser = null;
-  window.location.href = '/';
 }
