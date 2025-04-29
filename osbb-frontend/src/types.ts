@@ -5,10 +5,3 @@ export interface User {
   isSuperAdmin: boolean;
   error?: string;
 }
-
-export interface Request {
-  id: string;
-  userId: string;
-  message: string;
-  beautifiedMessage: string;
-}

@@ -24,12 +24,16 @@ router.post('/register', async (req: any, res: any) => {
   res.json({ token, phoneNumber });
 });
 
-// Логін користувача
 router.post('/login', async (req: any, res: any) => {
   const { phoneNumber, password } = req.body;
 
   if (!phoneNumber || !password) {
     return res.status(400).json({ error: 'Phone number and password are required' });
+  }
+
+  const phoneRegex = /^(\+380|380|0)\d{9}$/;
+  if (!phoneRegex.test(phoneNumber)) {
+    return res.status(400).json({ error: 'Invalid phone number format' });
   }
 
   const user = Object.values(users).find((user) => user.phoneNumber === phoneNumber);

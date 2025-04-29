@@ -1,4 +1,5 @@
 import { User } from './types';
+import { showLoader } from './loader';
 
 let currentUser: User | null = null;
 
@@ -31,6 +32,10 @@ export async function register(phone: string, password: string): Promise<User> {
 }
 
 export function logout() {
+  const textarea = document.getElementById('message') as HTMLTextAreaElement;
+  textarea.value = '';
+
+  showLoader();
   localStorage.removeItem('token');
   window.location.reload();
 }
