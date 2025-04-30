@@ -12,6 +12,15 @@ router.post('/register', async (req: any, res: any) => {
     return res.status(400).json({ error: 'Phone number and password are required' });
   }
 
+  const phoneRegex = /^(\+380|380|0)\d{9}$/;
+  if (!phoneRegex.test(phoneNumber)) {
+    return res.status(400).json({ error: 'Invalid phone number format' });
+  }
+
+  if (password.length < 5) {
+    return res.status(400).json({ error: 'Password must be at least 5 characters' });
+  }
+
   if (Object.values(users).some((user) => user.phoneNumber === phoneNumber)) {
     return res.status(400).json({ error: 'User already exists' });
   }
@@ -21,7 +30,7 @@ router.post('/register', async (req: any, res: any) => {
 
   users[token] = { phoneNumber, password: hashedPassword, token, isSuperAdmin: false };
 
-  res.json({ token, phoneNumber });
+  return res.json({ token, phoneNumber });
 });
 
 router.post('/login', async (req: any, res: any) => {
@@ -43,14 +52,22 @@ router.post('/login', async (req: any, res: any) => {
   }
 
   if (user?.phoneNumber === phoneNumber && user.isSuperAdmin && user.password === password) {
-    res.json({ token: user.token, phoneNumber: user.phoneNumber, isSuperAdmin: user.isSuperAdmin });
+    return res.json({
+      token: user.token,
+      phoneNumber: user.phoneNumber,
+      isSuperAdmin: user.isSuperAdmin,
+    });
   }
 
   if (!user || !(await bcrypt.compare(password, user.password))) {
     return res.status(401).json({ error: 'Invalid credentials' });
   }
 
-  res.json({ token: user.token, phoneNumber: user.phoneNumber, isSuperAdmin: user.isSuperAdmin });
+  return res.json({
+    token: user.token,
+    phoneNumber: user.phoneNumber,
+    isSuperAdmin: user.isSuperAdmin,
+  });
 });
 
 export default router;

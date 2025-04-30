@@ -26,7 +26,7 @@ router.post('/', authMiddleware, async (req: any, res: any) => {
 
   messages.push(newMessage);
 
-  res.json({ success: true });
+  return res.json({ success: true });
 });
 
 export default router;

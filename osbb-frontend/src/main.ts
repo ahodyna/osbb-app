@@ -77,9 +77,14 @@ beautifyBtn.addEventListener('click', async () => {
 
   try {
     showLoader();
-    const result = await beautifyMessage(textarea.value);
-    if (result.error) return showModal(result.error);
-    textarea.value = result.message || textarea.value;
+    const beautifiedMessage = await beautifyMessage(textarea.value);
+
+    if (beautifiedMessage.error) return showModal(beautifiedMessage.error);
+
+    const parsedValues = beautifiedMessage?.result ? JSON.parse(beautifiedMessage?.result) : {};
+
+    localStorage.setItem('section', parsedValues?.section);
+    textarea.value = parsedValues?.message || textarea.value;
   } finally {
     hideLoader();
   }
@@ -87,12 +92,11 @@ beautifyBtn.addEventListener('click', async () => {
 
 sendBtn.addEventListener('click', async () => {
   const textarea = document.getElementById('message') as HTMLTextAreaElement;
-  const section = (document.getElementById('section') as HTMLSelectElement).value;
 
   if (!textarea.value.trim()) return;
 
   try {
-    await sendMessage(textarea.value, section);
+    await sendMessage(textarea.value);
     textarea.value = '';
     showModal('Звернення успішно надіслано!');
   } catch (err) {

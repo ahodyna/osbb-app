@@ -1,8 +1,9 @@
 import { getCurrentUser } from './auth';
 
-export async function beautifyMessage(
-  message: string
-): Promise<{ error?: string; message?: string }> {
+export async function beautifyMessage(message: string): Promise<{
+  result?: string;
+  error?: string;
+}> {
   const res = await fetch('http://localhost:3000/api/messages', {
     method: 'POST',
     headers: {
@@ -11,12 +12,15 @@ export async function beautifyMessage(
     },
     body: JSON.stringify({ message }),
   });
+
   return res.json();
 }
 
-export async function sendMessage(message: string, section: string): Promise<void> {
+export async function sendMessage(message: string): Promise<void> {
   const user = getCurrentUser();
   if (!user) throw new Error('Користувач не авторизований');
+
+  const section = localStorage.getItem('section') || 'general';
 
   await fetch('http://localhost:3000/api/send-messages', {
     method: 'POST',

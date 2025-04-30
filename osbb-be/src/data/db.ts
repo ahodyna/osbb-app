@@ -10,7 +10,7 @@ export interface User {
 export const users: Record<string, User> = {
   superadmin_token: {
     phoneNumber: '380671111111',
-    password: 'admin',
+    password: 'admin123',
     token: 'superadmin_token',
     isSuperAdmin: true,
   },

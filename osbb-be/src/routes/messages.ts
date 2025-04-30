@@ -18,7 +18,7 @@ router.post('/', authMiddleware, async (req: any, res: any) => {
     finalText = await beautifyText(message);
   }
 
-  res.json({ success: true, message: finalText });
+  return res.json({ success: true, result: finalText });
 });
 
 router.get('/', authMiddleware, (req: any, res: any) => {
@@ -29,7 +29,7 @@ router.get('/', authMiddleware, (req: any, res: any) => {
     return res.json(filteredMessages);
   }
 
-  res.json(messages);
+  return res.json(messages);
 });
 
 export default router;
